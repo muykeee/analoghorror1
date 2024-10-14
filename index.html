@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Horror Windows</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'MS Sans Serif', Arial, sans-serif;
+            overflow: hidden;
+            background-color: #008080;
+            cursor: default;
+        }
+        #desktop {
+            height: calc(100% - 30px);
+            position: relative;
+        }
+        .icon {
+            width: 64px;
+            height: 64px;
+            margin: 10px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            position: absolute;
+        }
+        .icon img {
+            width: 32px;
+            height: 32px;
+        }
+        #taskbar {
+            height: 30px;
+            background-color: #c0c0c0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        #start-button {
+            width: 60px;
+            height: 22px;
+            margin-left: 2px;
+            background-color: #c0c0c0;
+            border: outset 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        #start-menu {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 200px;
+            background-color: #c0c0c0;
+            border: outset 2px;
+        }
+        .start-item {
+            padding: 5px;
+            cursor: pointer;
+        }
+        .start-item:hover {
+            background-color: #000080;
+            color: white;
+        }
+        .window {
+            position: absolute;
+            background-color: #c0c0c0;
+            border: outset 2px;
+            min-width: 300px;
+            min-height: 200px;
+            resize: both;
+            overflow: auto;
+        }
+        .window-header {
+            background-color: #000080;
+            color: white;
+            padding: 2px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .close-button {
+            cursor: pointer;
+        }
+        .window-content {
+            padding: 10px;
+        }
+        #glitch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKLW/AAAAGElEQVQIW2NkYGD4z8DAwMgAI0AMdM5/ACRwAgMsRgALAAAAAElFTkSuQmCC');
+            animation: glitch 0.3s infinite;
+        }
+        @keyframes glitch {
+            0% { opacity: 0; }
+            50% { opacity: 0.1; }
+            100% { opacity: 0; }
+        }
+        #creepy-image {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 80%;
+            max-height: 80%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="desktop">
+        <div class="icon" onclick="openWindow('mycomputer')" style="top: 10px; left: 10px;">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7OHOkAAADJUExURczMzAAAAP///7+/v7a2tt3d3cvLy8fHx8jIyOHh4dPT09bW1tDQ0Nzc3NHR0enp6ezs7M7OzuTk5Ofn5+rq6uvr6+3t7e7u7t7e3vDw8O/v7/T09P39/fLy8ufm5ubm5vf39+np6fPz8/X19fr6+vHx8fj4+Pv7+5SUlKCgoFtbW0tLS6mpqdTU1FdXVzc3N+Xl5ZOTk8PDw4uLi1paWmZmZkhISG9vb/n5+YCAgCIiIgUFBUpKSgMDA3BwcH5+fqqqqoqKinZ2dkdHRwEBAfb29mVlZQAAAG8+R9oAAAAfdFJOU///////////////////////////////////////AHxr7UgAAAAJcEhZcwAAEBAAGGOemfG/AAABBElEQVRYw+2X3VLDMAxFVRCGUf5KiqlZaAYoDKRgm/d/LLRpJrHS2iEZvsm9H5F8fCXXqUJoyOAMXxFGcpoGfO+gLygVZ/JDKJySNIAnBvzBUY57SxMDvCwPj1nOT48KnLBSUqY9gTnV6wMtcG5fmU5Mcs6s6HvFp4ADCsUgbUFXwFk0HWBOXwHGT6GJ3aSm/zp9eBrGhTHK/EyrmxiSmH1ZX10jE0KIIcfRyvwOzHJNWR6s0xjdsCzLgO5uUQ5KTAX8b0CRjRzRQVYhAKi4SHNFlTEKHU9c49GCwPFIzSNlAxqPJbz1+OD31+OXLUDNXcwX4CPpRZNKrp2Gg3MWXQf4AO8A0Ff6NI4vPk8AAAAASUVORK5CYII=">
+            <div>我的电脑</div>
+        </div>
+    </div>
+    <div id="taskbar">
+        <div id="start-button" onclick="toggleStartMenu()">开始</div>
+    </div>
+    <div id="start-menu">
+        <div class="start-item" onclick="openWindow('readme')">阅读我</div>
+        <div class="start-item" onclick="triggerGlitch()">???</div>
+    </div>
+    <div id="glitch-overlay"></div>
+    <img id="creepy-image" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCADcANwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/2Q==" alt="Creepy Image">
+
+    <script>
+        let storyProgress = 0;
+        const storyLines = [
+            "欢迎来到这个世界。小心你的选择，不是所有东西都如你所见。",
+            "你注意到桌面上出现了一个新的文件。也许你应该看看它。",
+            "文件里提到了一个密码。试试在'我的电脑'里输入它。",
+            "你发现了一些奇怪的照片。它们似乎在暗示什么...",
+            "系统似乎变得不稳定了。你觉得有人在监视你吗？",
+            "你找到了最后的线索。但是你确定要打开它吗？"
+        ];
+
+        function toggleStartMenu() {
+            const startMenu = document.getElementById('start-menu');
+            startMenu.style.display = startMenu.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function openWindow(type) {
+            const desktop = document.getElementById('desktop');
+            const window = document.createElement('div');
+            window.className = 'window';
+            window.style.left = '50px';
+            window.style.top = '50px';
+
+            let content = '';
+            switch(type) {
+                case 'mycomputer':
+                    content = getMyComputerContent();
+                    break;
+                case 'readme':
+                    content = getReadmeContent();
+                    break;
+                default:
+                    content = '错误：未知窗口类型';
+            }
+
+            window.innerHTML = `
+                <div class="window-header">
+                    <span>${type}</span>
+                    <span class="close-button" onclick="this.parentElement.parentElement.remove()">X</span>
+                </div>
+                <div class="window-content">${content}</div>
+            `;
+
+            desktop.appendChild(window);
+        }
+
+        function getMyComputerContent() {
+            return `
+                <input type="password" id="passwordInput" placeholder="输入密码">
+                <button onclick="checkPassword()">确认</button>
+            `;
+        }
+
+        function getReadmeContent() {
+            return storyLines[storyProgress];
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === "merjic") {
+                showCreepyImage();
+            } else {
+                alert("密码错误。系统似乎变得更不稳定了...");
+                triggerGlitch();
+            }
+        }
+
+        function showCreepyImage() {
+            const creepyImage = document.getElementById('creepy-image');
+            creepyImage.style.display = 'block';
+            setTimeout(() => {
+                creepyImage.style.display = 'none';
+            }, 3000);
+        }
+
+        function triggerGlitch() {
+            const glitchOverlay = document.getElementById('glitch-overlay');
+            glitchOverlay.style.opacity = 0.5;
+            setTimeout(() => {
+                glitchOverlay.style.opacity = 0;
+                storyProgress++;
+                if (storyProgress >= storyLines.length) {
+                    alert('游戏结束。你已经发现了所有的秘密...或者你认为是这样?');
+                } else {
+                    alert(storyLines[storyProgress]);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
