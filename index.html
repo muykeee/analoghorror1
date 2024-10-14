@@ -116,13 +116,27 @@
             max-height: 80%;
             z-index: 1000;
         }
+        #black-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 2000;
+        }
     </style>
 </head>
 <body>
     <div id="desktop">
         <div class="icon" onclick="openWindow('mycomputer')" style="top: 10px; left: 10px;">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7OHOkAAADJUExURczMzAAAAP///7+/v7a2tt3d3cvLy8fHx8jIyOHh4dPT09bW1tDQ0Nzc3NHR0enp6ezs7M7OzuTk5Ofn5+rq6uvr6+3t7e7u7t7e3vDw8O/v7/T09P39/fLy8ufm5ubm5vf39+np6fPz8/X19fr6+vHx8fj4+Pv7+5SUlKCgoFtbW0tLS6mpqdTU1FdXVzc3N+Xl5ZOTk8PDw4uLi1paWmZmZkhISG9vb/n5+YCAgCIiIgUFBUpKSgMDA3BwcH5+fqqqqoqKinZ2dkdHRwEBAfb29mVlZQAAAG8+R9oAAAAfdFJOU///////////////////////////////////////AHxr7UgAAAAJcEhZcwAAEBAAGGOemfG/AAABBElEQVRYw+2X3VLDMAxFVRCGUf5KiqlZaAYoDKRgm/d/LLRpJrHS2iEZvsm9H5F8fCXXqUJoyOAMXxFGcpoGfO+gLygVZ/JDKJySNIAnBvzBUY57SxMDvCwPj1nOT48KnLBSUqY9gTnV6wMtcG5fmU5Mcs6s6HvFp4ADCsUgbUFXwFk0HWBOXwHGT6GJ3aSm/zp9eBrGhTHK/EyrmxiSmH1ZX10jE0KIIcfRyvwOzHJNWR6s0xjdsCzLgO5uUQ5KTAX8b0CRjRzRQVYhAKi4SHNFlTEKHU9c49GCwPFIzSNlAxqPJbz1+OD31+OXLUDNXcwX4CPpRZNKrp2Gg3MWXQf4AO8A0Ff6NI4vPk8AAAAASUVORK5CYII=">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAGsSURBVFiF7ZY9TsNAEIXfjQUiJdAhKkC0VIgrcAOuwBE4AjVngQNQcQRqjsCvcKloKWiQKIgUCfbnFXEiEieOHYt/Cr5qtXrz3u7MeNeYmQAOAN+ACXQB3ADYqfHRu2cTYAzgGsDe1sBjLwC6LuHjGh89O03vX0T7nwBO/O/AzP3M+JGI6CnRWR54Zj4WkXMmLkBEekT0kpl+ZGYR6UqV8GQRthPiRx74cNvfp1FeKZyZ5/A4jmMrsgbRGTTBmXkIYA9AVEogC4/j+NnCBIwxbRHpAdiudAIZ+Lvv+wNrbdR0B2z5C1xru4wLZCsOgC0ReQKwWeoEjDFt3/dH1tqvzPS7VaILeN46AdWc1Hb3t6Zfau/AusEbBfj3XVgXuFRdB4wxva4xZk9rPU2e+zJLNyE+juNJgV9HRE4BjDLTp2UXcL1e/fINHBG5FJFe2vOJ6KHKAq5MbDjOOYoq/LJLoSdZA0rexQ2zDfCFNnAXwAuAj5qf5hDADYB9x1lZXyE8yoSdOb/GzwBe68KrEK/q6zhVJcSdpmH4H9F/UQNBhXBYAAAAAElFTkSuQmCC">
             <div>我的电脑</div>
+        </div>
+        <div class="icon" onclick="openWindow('password')" style="top: 10px; left: 84px;">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAFMSURBVFiF7ZY9TsNAEIXfRkGiQFRQIkUUXIEiNFwiQhwAKi7AFbgANxAFBR0SBT+RnMZeO8WuN2RjFMU/irdajWb2zXiz612XpC0AD8ATgAl0DuAeQNvho3bPR4ARgDsAF5mBRy8AOrWEj2p8tOw0vX8R7X8BuHTfgZnnM+M9EdFDorM98Ew8EJEbJi5ARGMiekhMP2RmEenKLuHJImwnxBMPfHjt79MoLxXOxGt4HMexbLIHURkUwZl4DuAMQFRIIAuP4/jZGQKOMROREYCTSgrIwF9935+7rotKV8CWv8C1NrntkK04ANoi8gzgtNAKGGPGvu+PXde9MdPPVon24HnrBETkZa+0u781/VJ7BdYNPnDB/+7CYcGT/O+AMWbcMcaca63nyXNfZekmxOdx/FLgN2ufqxcAg6J7wPd98ctXcETkVkTG6fOJ6L7MArWXsFQuPi1D8AuVKEyZ+BkNiQAAAABJRU5ErkJggg==">
+            <div>密码文档</div>
         </div>
     </div>
     <div id="taskbar">
@@ -134,6 +148,7 @@
     </div>
     <div id="glitch-overlay"></div>
     <img id="creepy-image" src="https://i.pinimg.com/564x/93/62/0f/93620fe26113a8bb7c402fcc10b674a7.jpg" alt="Creepy Image">
+    <div id="black-screen"></div>
 
     <script>
         let storyProgress = 0;
@@ -145,6 +160,24 @@
             "系统似乎变得不稳定了。你觉得有人在监视你吗？",
             "你找到了最后的线索。但是你确定要打开它吗？"
         ];
+
+        // 创建音频上下文
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        // 创建振荡器和增益节点
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        // 连接节点
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        // 设置初始频率和音量
+        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+
+        // 开始振荡器
+        oscillator.start();
 
         function toggleStartMenu() {
             const startMenu = document.getElementById('start-menu');
@@ -159,20 +192,28 @@
             window.style.top = '50px';
 
             let content = '';
+            let title = '';
             switch(type) {
                 case 'mycomputer':
                     content = getMyComputerContent();
+                    title = '我的电脑';
                     break;
                 case 'readme':
                     content = getReadmeContent();
+                    title = '阅读我';
+                    break;
+                case 'password':
+                    content = getPasswordContent();
+                    title = '密码文档';
                     break;
                 default:
                     content = '错误：未知窗口类型';
+                    title = '错误';
             }
 
             window.innerHTML = `
                 <div class="window-header">
-                    <span>${type}</span>
+                    <span>${title}</span>
                     <span class="close-button" onclick="this.parentElement.parentElement.remove()">X</span>
                 </div>
                 <div class="window-content">${content}</div>
@@ -192,6 +233,10 @@
             return storyLines[storyProgress];
         }
 
+        function getPasswordContent() {
+            return "密码为：merjic";
+        }
+
         function checkPassword() {
             const password = document.getElementById('passwordInput').value;
             if (password === "merjic") {
@@ -205,23 +250,53 @@
         function showCreepyImage() {
             const creepyImage = document.getElementById('creepy-image');
             creepyImage.style.display = 'block';
+            triggerGlitch();
             setTimeout(() => {
-                creepyImage.style.display = 'none';
+                const blackScreen = document.getElementById('black-screen');
+                blackScreen.style.display = 'block';
             }, 3000);
         }
 
         function triggerGlitch() {
             const glitchOverlay = document.getElementById('glitch-overlay');
             glitchOverlay.style.opacity = 0.5;
+            document.body.style.animation = 'distort 0.3s infinite';
+            document.body.style.animationTimingFunction = 'steps(2, end)';
+
+            // 触发诡异音效
+            playCreepySound();
+
             setTimeout(() => {
                 glitchOverlay.style.opacity = 0;
+                document.body.style.animation = '';
                 storyProgress++;
                 if (storyProgress >= storyLines.length) {
                     alert('游戏结束。你已经发现了所有的秘密...或者你认为是这样?');
                 } else {
                     alert(storyLines[storyProgress]);
                 }
+
+                // 停止诡异音效
+                stopCreepySound();
             }, 1000);
+        }
+
+        function playCreepySound() {
+            const currentTime = audioContext.currentTime;
+
+            // 设置频率变化
+            oscillator.frequency.setValueAtTime(440, currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(880, currentTime + 0.5);
+            oscillator.frequency.exponentialRampToValueAtTime(220, currentTime + 1);
+
+            // 设置音量变化
+            gainNode.gain.setValueAtTime(0, currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.5, currentTime + 0.1);
+            gainNode.gain.linearRampToValueAtTime(0, currentTime + 1);
+        }
+
+        function stopCreepySound() {
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
         }
     </script>
 </body>
